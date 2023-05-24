@@ -1,43 +1,62 @@
 package com.iedrania.mortypedia
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.iedrania.mortypedia.model.CharasData
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.iedrania.mortypedia.ui.navigation.NavigationItem
+import com.iedrania.mortypedia.ui.navigation.Screen
+import com.iedrania.mortypedia.ui.screen.favorites.FavoritesScreen
+import com.iedrania.mortypedia.ui.screen.home.HomeScreen
 import com.iedrania.mortypedia.ui.theme.MortypediaTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MortypediaApp(
     modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
 ) {
-    Box(modifier = modifier) {
-        LazyColumn {
-            items(CharasData.charas, key = { it.id }) { chara ->
-                CharaListItem(
-                    name = chara.name,
-                    photoUrl = chara.photoUrl,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+    Scaffold(
+        bottomBar = {
+            BottomBar(navController)
+        }, modifier = modifier
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Home.route) {
+                HomeScreen()
+            }
+            composable(Screen.Favorites.route) {
+                FavoritesScreen()
+            }
+            composable(Screen.About.route) {
+//                AboutScreen()
             }
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun MortypediaAppPreview() {
@@ -47,42 +66,52 @@ fun MortypediaAppPreview() {
 }
 
 @Composable
-fun CharaListItem(
-    name: String,
-    photoUrl: String,
-    modifier: Modifier = Modifier
+private fun BottomBar(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable {}
+    NavigationBar(
+        modifier = modifier
     ) {
-        AsyncImage(
-            model = photoUrl,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .padding(8.dp)
-                .size(60.dp)
-                .clip(CircleShape)
-        )
-        Text(
-            text = name,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .padding(start = 16.dp)
-        )
-    }
-}
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
 
-@Preview(showBackground = true)
-@Composable
-fun CharaListItemPreview() {
-    MortypediaTheme {
-        CharaListItem(
-            name = "Chara Name",
-            photoUrl = "",
+        val navigationItems = listOf(
+            NavigationItem(
+                title = stringResource(R.string.menu_home),
+                icon = Icons.Default.Home,
+                screen = Screen.Home
+            ),
+            NavigationItem(
+                title = stringResource(R.string.menu_favorites),
+                icon = Icons.Default.Favorite,
+                screen = Screen.Favorites
+            ),
+            NavigationItem(
+                title = stringResource(R.string.about_page),
+                icon = Icons.Default.AccountCircle,
+                screen = Screen.About
+            ),
         )
+        NavigationBar {
+            navigationItems.map { item ->
+                NavigationBarItem(icon = {
+                    Icon(
+                        imageVector = item.icon, contentDescription = item.title
+                    )
+                },
+                    label = { Text(item.title) },
+                    selected = currentRoute == item.screen.route,
+                    onClick = {
+                        navController.navigate(item.screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    })
+            }
+        }
     }
 }
