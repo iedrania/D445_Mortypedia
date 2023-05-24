@@ -1,6 +1,5 @@
 package com.iedrania.mortypedia.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,10 +18,8 @@ import coil.compose.AsyncImage
 import com.iedrania.mortypedia.ui.theme.MortypediaTheme
 
 @Composable
-fun CharaItem(
-    name: String, photoUrl: String, modifier: Modifier = Modifier
-) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.clickable {}) {
+fun CharaItem(name: String, photoUrl: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
             model = photoUrl,
             contentDescription = null,

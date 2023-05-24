@@ -18,12 +18,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.iedrania.mortypedia.ui.navigation.NavigationItem
 import com.iedrania.mortypedia.ui.navigation.Screen
+import com.iedrania.mortypedia.ui.screen.detail.DetailScreen
 import com.iedrania.mortypedia.ui.screen.favorites.FavoritesScreen
 import com.iedrania.mortypedia.ui.screen.home.HomeScreen
 import com.iedrania.mortypedia.ui.theme.MortypediaTheme
@@ -34,9 +37,14 @@ fun MortypediaApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
         bottomBar = {
-            BottomBar(navController)
+            if (currentRoute != Screen.Detail.route) {
+                BottomBar(navController)
+            }
         }, modifier = modifier
     ) { innerPadding ->
         NavHost(
@@ -45,13 +53,24 @@ fun MortypediaApp(
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(navigateToDetail = { charaId ->
+                    navController.navigate(Screen.Detail.createRoute(charaId))
+                })
             }
             composable(Screen.Favorites.route) {
                 FavoritesScreen()
             }
             composable(Screen.About.route) {
 //                AboutScreen()
+            }
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("charaId") { type = NavType.StringType }),
+            ) {
+                val id = it.arguments?.getString("charaId") ?: ""
+                DetailScreen(charaId = id, navigateBack = {
+                    navController.navigateUp()
+                }, navigateToFavorites = {})
             }
         }
     }
