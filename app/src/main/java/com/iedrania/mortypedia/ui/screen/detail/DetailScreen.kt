@@ -22,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -83,10 +82,11 @@ fun DetailContent(
     modifier: Modifier = Modifier,
 ) {
 
-    var favValue by rememberSaveable { mutableStateOf(value) }
+    val favValue by rememberSaveable { mutableStateOf(value) }
 
     Column(modifier = modifier) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .weight(1f)
@@ -114,13 +114,13 @@ fun DetailContent(
                 Text(
                     text = name,
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium.copy(
+                    style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.ExtraBold
                     ),
                 )
                 Text(
                     text = stringResource(R.string.lorem_ipsum),
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
                 )
             }
@@ -132,12 +132,12 @@ fun DetailContent(
                 .background(LightGray)
         )
         Column(
-            modifier = Modifier.padding(16.dp)
+            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)
         ) {
             Button(onClick = {
                 onAddToFavorites(!favValue)
             }) {
-                Text(stringResource(R.string.add_to_favorites))
+                Text(if (!favValue) stringResource(R.string.add_to_favorites) else stringResource(R.string.remove_from_favorites))
             }
         }
     }

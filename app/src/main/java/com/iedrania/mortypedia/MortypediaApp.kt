@@ -68,9 +68,22 @@ fun MortypediaApp(
                 arguments = listOf(navArgument("charaId") { type = NavType.StringType }),
             ) {
                 val id = it.arguments?.getString("charaId") ?: ""
-                DetailScreen(charaId = id, navigateBack = {
-                    navController.navigateUp()
-                }, navigateToFavorites = {})
+                DetailScreen(
+                    charaId = id,
+                    navigateBack = {
+                        navController.navigateUp()
+                    },
+                    navigateToFavorites = {
+                        navController.popBackStack()
+                        navController.navigate(Screen.Favorites.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                )
             }
         }
     }

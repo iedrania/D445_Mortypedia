@@ -6,4 +6,5 @@
     <string name="menu_favorites">Favorites</string>
     <string name="menu_home">Home</string>
     <string name="about_page">About</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
 </resources>
