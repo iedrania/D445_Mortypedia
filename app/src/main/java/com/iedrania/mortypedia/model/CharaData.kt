@@ -3,34 +3,88 @@ package com.iedrania.mortypedia.model
 object CharasData {
     val charas = listOf(
         Chara(
-            "1", "Rick Sanchez", "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+            "1",
+            "Rick Sanchez",
+            "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            "Alive",
+            "Human",
+            "Male",
+            "Earth (C-137)",
+            "Citadel of Ricks",
         ),
         Chara(
-            "2", "Morty Smith", "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+            "2", "Morty Smith", "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+            "Alive",
+            "Human",
+            "Male",
+            "unknown",
+            "Citadel of Ricks",
         ),
         Chara(
-            "3", "Summer Smith", "https://rickandmortyapi.com/api/character/avatar/3.jpeg"
+            "3", "Summer Smith", "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
+            "Alive",
+            "Human",
+            "Female",
+            "Earth (Replacement Dimension)",
+            "Earth (Replacement Dimension)",
         ),
         Chara(
-            "4", "Beth Smith", "https://rickandmortyapi.com/api/character/avatar/4.jpeg"
+            "4", "Beth Smith", "https://rickandmortyapi.com/api/character/avatar/4.jpeg",
+            "Alive",
+            "Human",
+            "Female",
+            "Earth (Replacement Dimension)",
+            "Earth (Replacement Dimension)",
         ),
         Chara(
-            "5", "Jerry Smith", "https://rickandmortyapi.com/api/character/avatar/5.jpeg"
+            "5", "Jerry Smith", "https://rickandmortyapi.com/api/character/avatar/5.jpeg",
+            "Alive",
+            "Human",
+            "Male",
+            "Earth (Replacement Dimension)",
+            "Earth (Replacement Dimension)",
         ),
         Chara(
-            "6", "Abadango Cluster Princess", "https://rickandmortyapi.com/api/character/avatar/6.jpeg"
+            "6",
+            "Abadango Cluster Princess",
+            "https://rickandmortyapi.com/api/character/avatar/6.jpeg",
+            "Alive",
+            "Alien",
+            "Female",
+            "Abadango",
+            "Abadango",
         ),
         Chara(
-            "7", "Abradolf Lincler", "https://rickandmortyapi.com/api/character/avatar/7.jpeg"
+            "7", "Abradolf Lincler", "https://rickandmortyapi.com/api/character/avatar/7.jpeg",
+            "unknown",
+            "Human",
+            "Male",
+            "Earth (Replacement Dimension)",
+            "Testicle Monster Dimension",
         ),
         Chara(
-            "8", "Adjudicator Rick", "https://rickandmortyapi.com/api/character/avatar/8.jpeg"
+            "8", "Adjudicator Rick", "https://rickandmortyapi.com/api/character/avatar/8.jpeg",
+            "Dead",
+            "Human",
+            "Male",
+            "unknown",
+            "Citadel of Ricks",
         ),
         Chara(
-            "9", "Agency Director", "https://rickandmortyapi.com/api/character/avatar/9.jpeg"
+            "9", "Agency Director", "https://rickandmortyapi.com/api/character/avatar/9.jpeg",
+            "Dead",
+            "Human",
+            "Male",
+            "Earth (Replacement Dimension)",
+            "Earth (Replacement Dimension)",
         ),
         Chara(
-            "10", "Alan Rails", "https://rickandmortyapi.com/api/character/avatar/10.jpeg"
+            "10", "Alan Rails", "https://rickandmortyapi.com/api/character/avatar/10.jpeg",
+            "Dead",
+            "Human",
+            "Male",
+            "unknown",
+            "Worldender's lair",
         ),
     )
 }

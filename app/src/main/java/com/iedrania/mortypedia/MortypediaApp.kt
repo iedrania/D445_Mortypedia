@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.iedrania.mortypedia.ui.navigation.NavigationItem
 import com.iedrania.mortypedia.ui.navigation.Screen
+import com.iedrania.mortypedia.ui.screen.about.AboutScreen
 import com.iedrania.mortypedia.ui.screen.detail.DetailScreen
 import com.iedrania.mortypedia.ui.screen.favorites.FavoritesScreen
 import com.iedrania.mortypedia.ui.screen.home.HomeScreen
@@ -61,7 +62,7 @@ fun MortypediaApp(
                 FavoritesScreen()
             }
             composable(Screen.About.route) {
-//                AboutScreen()
+                AboutScreen()
             }
             composable(
                 route = Screen.Detail.route,
@@ -73,17 +74,16 @@ fun MortypediaApp(
                     navigateBack = {
                         navController.navigateUp()
                     },
-                    navigateToFavorites = {
-                        navController.popBackStack()
-                        navController.navigate(Screen.Favorites.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+                ) {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Favorites.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
-                    },
-                )
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             }
         }
     }

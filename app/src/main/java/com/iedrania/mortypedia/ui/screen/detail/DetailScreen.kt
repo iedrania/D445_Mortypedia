@@ -59,6 +59,11 @@ fun DetailScreen(
                 val data = uiState.data
                 DetailContent(data.chara.name,
                     data.chara.photoUrl,
+                    data.chara.status,
+                    data.chara.species,
+                    data.chara.gender,
+                    data.chara.origin,
+                    data.chara.location,
                     data.value,
                     onBackClick = navigateBack,
                     onAddToFavorites = { newValue ->
@@ -76,17 +81,20 @@ fun DetailScreen(
 fun DetailContent(
     name: String,
     photoUrl: String,
+    status: String,
+    species: String,
+    gender: String,
+    location: String,
+    origin: String,
     value: Boolean,
     onBackClick: () -> Unit,
     onAddToFavorites: (newValue: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     val favValue by rememberSaveable { mutableStateOf(value) }
 
     Column(modifier = modifier) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .weight(1f)
@@ -99,7 +107,6 @@ fun DetailContent(
                     modifier = modifier
                         .height(400.dp)
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
                 )
                 Icon(imageVector = Icons.Default.ArrowBack,
                     contentDescription = stringResource(R.string.back),
@@ -108,8 +115,9 @@ fun DetailContent(
                         .clickable { onBackClick() })
             }
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             ) {
                 Text(
                     text = name,
@@ -119,7 +127,27 @@ fun DetailContent(
                     ),
                 )
                 Text(
-                    text = stringResource(R.string.lorem_ipsum),
+                    text = stringResource(R.string.status) + status,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                )
+                Text(
+                    text = stringResource(R.string.species) + species,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                )
+                Text(
+                    text = stringResource(R.string.gender) + gender,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                )
+                Text(
+                    text = stringResource(R.string.location) + location,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                )
+                Text(
+                    text = stringResource(R.string.origin) + origin,
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
                 )
@@ -132,7 +160,10 @@ fun DetailContent(
                 .background(LightGray)
         )
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
             Button(onClick = {
                 onAddToFavorites(!favValue)
@@ -147,6 +178,15 @@ fun DetailContent(
 @Composable
 fun DetailContentPreview() {
     MortypediaTheme {
-        DetailContent("Chara Name", "", false, onBackClick = {}, onAddToFavorites = {})
+        DetailContent("Chara Name",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            false,
+            onBackClick = {},
+            onAddToFavorites = {})
     }
 }
