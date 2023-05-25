@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -24,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -43,11 +41,13 @@ import com.iedrania.mortypedia.ui.theme.MortypediaTheme
 
 @Composable
 fun DetailScreen(
-    charaId: String, viewModel: DetailViewModel = viewModel(
+    charaId: String,
+    viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
-    ), navigateBack: () -> Unit, navigateToFavorites: () -> Unit
+    ),
+    navigateBack: () -> Unit, navigateToFavorites: () -> Unit,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -95,7 +95,7 @@ fun DetailContent(
 
     Column(modifier = modifier) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .verticalScroll(rememberScrollState())
                 .weight(1f)
         ) {
@@ -110,12 +110,12 @@ fun DetailContent(
                 )
                 Icon(imageVector = Icons.Default.ArrowBack,
                     contentDescription = stringResource(R.string.back),
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(16.dp)
                         .clickable { onBackClick() })
             }
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .padding(16.dp)
                     .fillMaxWidth()
             ) {
@@ -154,14 +154,14 @@ fun DetailContent(
             }
         }
         Spacer(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .height(4.dp)
                 .background(LightGray)
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
+            modifier = modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {

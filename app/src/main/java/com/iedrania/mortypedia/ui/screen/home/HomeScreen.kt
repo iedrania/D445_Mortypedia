@@ -51,10 +51,10 @@ fun HomeContent(
 ) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
     ) {
-        items(charas) { data ->
+        items(charas, key = { it.chara.id }) { data ->
             Box(modifier = Modifier.clickable { navigateToDetail(data.chara.id) }) {
                 CharaItem(name = data.chara.name, photoUrl = data.chara.photoUrl)
             }

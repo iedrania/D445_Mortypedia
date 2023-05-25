@@ -18,13 +18,13 @@ import coil.compose.AsyncImage
 import com.iedrania.mortypedia.ui.theme.MortypediaTheme
 
 @Composable
-fun CharaItem(name: String, photoUrl: String) {
+fun CharaItem(name: String, photoUrl: String, modifier: Modifier = Modifier) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
             model = photoUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
+            modifier = modifier
                 .padding(8.dp)
                 .size(60.dp)
                 .clip(CircleShape)
@@ -32,7 +32,7 @@ fun CharaItem(name: String, photoUrl: String) {
         Text(
             text = name,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(start = 16.dp)
